@@ -1,4 +1,4 @@
-export interface FavoriteProductData {
+export interface ProductData {
   imageUrl: string;
   imageText: string;
   figureCaption: string;

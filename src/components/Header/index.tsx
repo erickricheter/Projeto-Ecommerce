@@ -18,7 +18,7 @@ export const Header = () => {
     <Container>
       <nav id="principal">
         <div id="logo">
-          <Links href="index.html">
+          <Links href="/">
             <img
               src="https://i.imgur.com/7Mda0IR.jpg"
               alt="Logo casinha pet"
