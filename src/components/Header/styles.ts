@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.header`
@@ -34,7 +35,7 @@ export const Container = styled.header`
   }
 `;
 
-export const Links = styled.a`
+export const Links = styled(Link)`
   text-decoration: none;
   font-size: 1.5em;
   color: #030086;

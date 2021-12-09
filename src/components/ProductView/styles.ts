@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
-  border: 2px solid gray;
   border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 29px 6px #cccccc;
+  box-shadow: 0px 0px 29px 6px #cccccc;
   overflow: hidden;
   padding: 5px;
 
-  img {
-    width: 250px;
-    height: 250px;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.1);
   }
 
   figcaption {
@@ -17,4 +19,17 @@ export const Container = styled.section`
     align-items: center;
     text-align: center;
   }
+`;
+
+export const Img = styled.img`
+  width: 250px;
+  height: 250px;
+`;
+
+export const Price = styled.span`
+  color: #007dc5;
+`;
+
+export const ModalWrapper = styled.div`
+  display: flex;
 `;

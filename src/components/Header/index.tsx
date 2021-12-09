@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GiShoppingCart } from "react-icons/all";
+import { Link } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
 import { Container, Links } from "./styles";
 
 export const Header = () => {
+  const { cart } = useContext(CartContext);
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
@@ -18,7 +21,7 @@ export const Header = () => {
     <Container>
       <nav id="principal">
         <div id="logo">
-          <Links href="/">
+          <Links to="/">
             <img
               src="https://i.imgur.com/7Mda0IR.jpg"
               alt="Logo casinha pet"
@@ -29,29 +32,30 @@ export const Header = () => {
 
         <div id="menu">
           {width < 850 && (
-            <Links href="produtos.html" className="show">
+            <Links to="products" className="show">
               Produtos
             </Links>
           )}
 
           {width >= 850 && (
             <>
-              <Links href="produtos.html#racoesCanina" className="hidden">
+              <Links to="/products#dogsFood" className="hidden">
                 Cachorro
               </Links>
-              <Links href="produtos.html#racaoFelina" className="hidden">
+              <Links to="/products#catsFood" className="hidden">
                 Gato
               </Links>
-              <Links href="produtos.html#produtosPeixe" className="hidden">
+              <Links to="products#fishProducts" className="hidden">
                 Peixe
               </Links>
             </>
           )}
-          <Links href="login.html">Login</Links>
-          <Links href="cadastro.html">Cadastro</Links>
-          <a href="carrinhoCompras.html">
+          <Links to="login.html">Login</Links>
+          <Links to="cadastro.html">Cadastro</Links>
+          <Link to="cart">
             <GiShoppingCart size={32} />
-          </a>
+          </Link>
+          {cart.length}
         </div>
       </nav>
     </Container>
