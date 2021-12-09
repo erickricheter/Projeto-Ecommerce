@@ -1,124 +1,198 @@
-import React from "react";
+import { Button, DatePicker, Form, Input, Select } from "antd";
+import React, { FocusEvent, useState } from "react";
+import { validateBr } from "js-brasil";
+import { FormValidationsData } from "./types";
 
-export const FormRegistration = () => (
-  <div id="cadastro-container">
-    <h1>Faça seu cadastro!</h1>
+export const FormRegistration = () => {
+  const [form] = Form.useForm();
 
-    <div id="documentos">
-      <form>
-        <label htmlFor="nome">Nome*:</label>
-        <input
-          type="text"
-          name="nome"
-          id="nome"
-          placeholder="Digite seu Nome"
-          required /* maxlength="10" */
-        />
+  const [formValidations, setFormValidations] = useState<FormValidationsData>({
+    cpf: { validateStatus: "success", errorMsg: "" },
+  });
 
-        <label htmlFor="sobrenome">Sobrenome*:</label>
-        <input
-          type="text"
-          name="Digite seu Sobrenome"
-          id="sobrenome"
-          placeholder="Ex: Ferreira"
-          required
-        />
+  const [shouldDisableFields, setShouldDisableFields] = useState(false);
 
-        <label htmlFor="email">E-mail*:</label>
-        <input
-          type="email"
+  const cleanAddressFields = () => {
+    form.setFieldsValue({
+      street: "",
+      city: "",
+      neighborhood: "",
+      country: "",
+    });
+    setShouldDisableFields(false);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    const isCpfValid = validateBr.cpf(values.cpf ?? "");
+    if (!isCpfValid) {
+      setFormValidations({
+        ...formValidations,
+        cpf: { validateStatus: "error", errorMsg: "CPF Inválido" },
+      });
+      return false;
+    }
+    setFormValidations({
+      ...formValidations,
+      cpf: { validateStatus: "success", errorMsg: null },
+    });
+    return true;
+  };
+  const cepBlur = async (evt: FocusEvent<HTMLInputElement>) => {
+    const cepValue = evt.target.value ?? "";
+    if (validateBr.cep(cepValue)) {
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cepValue}/json/`
+      );
+      const data = await response.json();
+      if (!data.erro) {
+        form.setFieldsValue({
+          street: data.logradouro,
+          city: data.localidade,
+          neighborhood: data.bairro,
+          country: data.uf,
+        });
+        setShouldDisableFields(true);
+      } else {
+        setShouldDisableFields(false);
+        cleanAddressFields();
+      }
+    } else {
+      cleanAddressFields();
+    }
+  };
+
+  return (
+    <div id="cadastro-container">
+      <h1>Faça seu cadastro!</h1>
+
+      <Form form={form}>
+        <Form.Item
+          label="Nome Completo"
+          name="name"
+          rules={[{ required: true, message: "Digite seu Nome Completo!" }]}
+        >
+          <Input placeholder="Digite seu Nome." />
+        </Form.Item>
+
+        <Form.Item
+          label="E-mail"
           name="email"
-          id="email"
-          placeholder="Digite seu E-mail"
-          required
-        />
+          rules={[
+            { required: true, message: "Digite seu E-mail!", type: "email" },
+          ]}
+        >
+          <Input type="email" placeholder="Digite seu E-mail" />
+        </Form.Item>
 
-        <label htmlFor="cpf">Cpf*:</label>
-        <input
-          type="text"
+        <Form.Item
+          label="CPF"
           name="cpf"
-          id="cpf"
-          placeholder="Digite seu cpf (somente numeros)"
-          pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"
-          required
-        />
+          rules={[{ required: true, message: "Digite seu CPF Correto!" }]}
+          validateStatus={formValidations.cpf.validateStatus}
+          help={formValidations.cpf.errorMsg}
+        >
+          <Input type="number" placeholder="Digite seu CPF" />
+        </Form.Item>
 
-        <label htmlFor="dataNascimento">Data Nascimento*:</label>
-        <input type="date" name="dataNascimento" id="dataNascimento" required />
+        <Form.Item
+          label="Data Nascimento"
+          name="bornDate"
+          rules={[
+            {
+              required: true,
+              message: "Digite uma Data de Nascimento Válida!",
+            },
+          ]}
+        >
+          <DatePicker />
+        </Form.Item>
 
-        <label htmlFor="sexo">
-          Sexo: <span className="opcional">(Opcional)</span>
-        </label>
-        <select>
-          <option value="N">Não definido</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
-      </form>
-    </div>
+        <Form.Item
+          label="Sexo"
+          name="gender"
+          rules={[{ required: true, message: "Selecione Seu sexo!" }]}
+        >
+          <Select placeholder="Selecione">
+            <Select.Option value="male">Homem</Select.Option>
+            <Select.Option value="female">Mulher</Select.Option>
+            <Select.Option value="none">Não declarado</Select.Option>
+          </Select>
+        </Form.Item>
 
-    <div id="endereco">
-      <h2 id="h2-endereco">Endereço</h2>
-      <form>
-        <label htmlFor="rua">Rua*</label>
-        <input
-          type="text"
-          name="rua"
-          id="rua"
-          placeholder="Digite sua Rua"
-          required
-        />
-
-        <label htmlFor="numeroCasa">Numero da Casa*:</label>
-        <input
-          type="number"
-          name="numeroCasa"
-          id="numeroCasa"
-          placeholder="Digite o numero da sua Casa"
-          required
-        />
-
-        <label htmlFor="bairro">Bairro*:</label>
-        <input
-          type="text"
-          name="bairro"
-          id="bairro"
-          placeholder="Digite seu Bairro"
-          required
-        />
-
-        <label htmlFor="cidade">Cidade*:</label>
-        <input
-          type="text"
-          name="cidade"
-          id="cidade"
-          placeholder="Digite sua cidade"
-          required
-        />
-
-        <label htmlFor="estado">Estado*:</label>
-        <input
-          type="text"
-          name="estado"
-          id="estado"
-          placeholder="Digite seu Estado"
-          required
-        />
-
-        <label htmlFor="cep">CEP*:</label>
-        <input
-          type="text"
+        <h2 id="h2-endereco">Endereço</h2>
+        <Form.Item
+          label="CEP"
           name="cep"
-          id="cep"
-          placeholder="Digite seu CPF"
-          required
-          pattern="[0-8]{5}-[0-8]{3}"
-        />
+          rules={[{ required: true, message: "CEP inválido!" }]}
+        >
+          <Input onBlur={cepBlur} />
+        </Form.Item>
 
-        <a href="login.html">Já tem uma conta? Faça seu login!</a>
+        <Form.Item
+          label="Estado"
+          name="country"
+          rules={[{ required: true, message: "Estado Inválido!" }]}
+        >
+          <Input disabled={shouldDisableFields} />
+        </Form.Item>
 
-        <input type="submit" name="cadastrar" value="Cadastrar" />
-      </form>
+        <Form.Item
+          label="Cidade"
+          name="city"
+          rules={[{ required: true, message: "Cidade Inválida!" }]}
+        >
+          <Input disabled={shouldDisableFields} />
+        </Form.Item>
+
+        <Form.Item
+          label="Bairro"
+          name="neighborhood"
+          rules={[{ required: true, message: "Bairro Inválido!" }]}
+        >
+          <Input disabled={shouldDisableFields} />
+        </Form.Item>
+
+        <Form.Item
+          label="Rua"
+          name="street"
+          rules={[{ required: true, message: "Rua Inválida!" }]}
+        >
+          <Input disabled={shouldDisableFields} />
+        </Form.Item>
+
+        <Form.Item
+          label="Numero"
+          name="number"
+          rules={[{ required: true, message: "Numero da casa Inválido!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Senha"
+          name="password"
+          rules={[{ required: true, message: "Senha Inválida!" }]}
+        >
+          <Input.Password maxLength={12} minLength={8} />
+        </Form.Item>
+
+        <Button type="link" htmlType="button">
+          Login
+        </Button>
+
+        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+          Registrar
+        </Button>
+
+        <Button htmlType="button" onClick={onReset}>
+          Cancelar
+        </Button>
+      </Form>
     </div>
-  </div>
-);
+  );
+};

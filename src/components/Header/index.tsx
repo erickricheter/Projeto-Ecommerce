@@ -51,7 +51,7 @@ export const Header = () => {
             </>
           )}
           <Links to="login.html">Login</Links>
-          <Links to="cadastro.html">Cadastro</Links>
+          <Links to="/registration">Cadastro</Links>
           <Link to="cart">
             <GiShoppingCart size={32} />
           </Link>

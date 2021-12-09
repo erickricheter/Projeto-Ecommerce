@@ -1,8 +1,8 @@
 import React from "react";
-import { Form } from "./Form";
+import { ContactForm } from "./Form";
 
 export const Contact = () => (
   <div>
-    <Form />
+    <ContactForm />
   </div>
 );

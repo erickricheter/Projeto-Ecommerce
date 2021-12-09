@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container } from "./styles";
 
 export const Footer = () => (
@@ -13,12 +14,12 @@ export const Footer = () => (
           className="logo"
         />
       </a>
-      <a href="faleConosco.html" className="tamanho">
+      <Link to="/contact" className="tamanho">
         Fale Conosco!
-      </a>
-      <a href="sobre.html" className="tamanho">
+      </Link>
+      <Link to="/contact" className="tamanho">
         Conheça mais Sobre a gente!
-      </a>
+      </Link>
     </address>
   </Container>
 );
