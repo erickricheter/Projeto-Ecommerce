@@ -26,8 +26,6 @@ export const CartProvider: React.FC = ({ children }) => {
 
   const plusOne = (id: number) => {
     const index = cart.findIndex((product) => product.id === id);
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (index > -1) {
       const newCart = [...cart];
       newCart[index] = {

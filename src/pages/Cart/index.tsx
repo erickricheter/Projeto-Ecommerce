@@ -20,23 +20,13 @@ export const Cart = () => {
   }, [ticket]);
 
   return cart.length ? (
-    <>
-      <ProductsList title="Produtos No carrinho" products={cart} />;
-      <div id="Total">{totalValue.toFixed(2)}</div>
-      <div id="Cupom">
-        <input
-          value={ticket}
-          type="text"
-          onChange={(evt) => setTicket(evt.target.value)}
-        />
-        {isTicketValid && (
-          <>
-            <span>O Cupom digitado é válido</span> O valor Com desconto é{" "}
-            {(totalValue - totalValue * 0.15).toFixed(2)}
-          </>
-        )}
-      </div>
-    </>
+    <ProductsList
+      title="Produtos No carrinho"
+      products={cart}
+      totalValue={totalValue.toFixed(2)}
+      setTicket={setTicket}
+      isTicketValid={isTicketValid}
+    />
   ) : (
     <h1>Carrinho Vazio!</h1>
   );

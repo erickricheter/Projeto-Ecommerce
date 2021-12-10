@@ -9,7 +9,6 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
   }
-
   .formatacaoLista {
     padding: 20px;
     margin: 15px 0px;

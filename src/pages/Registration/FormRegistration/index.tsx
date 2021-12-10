@@ -1,7 +1,13 @@
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { DatePicker, Form, notification, Select } from "antd";
 import React, { FocusEvent, useState } from "react";
 import { validateBr } from "js-brasil";
 import { FormValidationsData } from "./types";
+import { ButtonAlign, Container, H2, Sbutton, SInput } from "./styles";
+import { SformItem } from "../../../styles";
+
+const styles = {
+  customInput: { width: "100%", border: "2px solid black" },
+};
 
 export const FormRegistration = () => {
   const [form] = Form.useForm();
@@ -40,6 +46,7 @@ export const FormRegistration = () => {
       ...formValidations,
       cpf: { validateStatus: "success", errorMsg: null },
     });
+    notification.open({ message: "Registrado" });
     return true;
   };
   const cepBlur = async (evt: FocusEvent<HTMLInputElement>) => {
@@ -65,41 +72,40 @@ export const FormRegistration = () => {
       cleanAddressFields();
     }
   };
-
   return (
-    <div id="cadastro-container">
+    <Container id="cadastro-container">
       <h1>Faça seu cadastro!</h1>
 
       <Form form={form}>
-        <Form.Item
+        <SformItem
           label="Nome Completo"
           name="name"
           rules={[{ required: true, message: "Digite seu Nome Completo!" }]}
         >
-          <Input placeholder="Digite seu Nome." />
-        </Form.Item>
+          <SInput placeholder="Digite seu Nome." />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="E-mail"
           name="email"
           rules={[
             { required: true, message: "Digite seu E-mail!", type: "email" },
           ]}
         >
-          <Input type="email" placeholder="Digite seu E-mail" />
-        </Form.Item>
+          <SInput type="email" placeholder="Digite seu E-mail" />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="CPF"
           name="cpf"
           rules={[{ required: true, message: "Digite seu CPF Correto!" }]}
           validateStatus={formValidations.cpf.validateStatus}
           help={formValidations.cpf.errorMsg}
         >
-          <Input type="number" placeholder="Digite seu CPF" />
-        </Form.Item>
+          <SInput type="number" placeholder="Digite seu CPF" />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Data Nascimento"
           name="bornDate"
           rules={[
@@ -109,90 +115,95 @@ export const FormRegistration = () => {
             },
           ]}
         >
-          <DatePicker />
-        </Form.Item>
+          <DatePicker style={styles.customInput} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Sexo"
           name="gender"
           rules={[{ required: true, message: "Selecione Seu sexo!" }]}
         >
-          <Select placeholder="Selecione">
+          <Select placeholder="Selecione" style={styles.customInput}>
             <Select.Option value="male">Homem</Select.Option>
             <Select.Option value="female">Mulher</Select.Option>
             <Select.Option value="none">Não declarado</Select.Option>
           </Select>
-        </Form.Item>
+        </SformItem>
 
-        <h2 id="h2-endereco">Endereço</h2>
-        <Form.Item
+        <H2>Endereço</H2>
+        <SformItem
           label="CEP"
           name="cep"
           rules={[{ required: true, message: "CEP inválido!" }]}
         >
-          <Input onBlur={cepBlur} />
-        </Form.Item>
+          <SInput onBlur={cepBlur} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Estado"
           name="country"
           rules={[{ required: true, message: "Estado Inválido!" }]}
         >
-          <Input disabled={shouldDisableFields} />
-        </Form.Item>
+          <SInput disabled={shouldDisableFields} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Cidade"
           name="city"
           rules={[{ required: true, message: "Cidade Inválida!" }]}
         >
-          <Input disabled={shouldDisableFields} />
-        </Form.Item>
+          <SInput disabled={shouldDisableFields} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Bairro"
           name="neighborhood"
           rules={[{ required: true, message: "Bairro Inválido!" }]}
         >
-          <Input disabled={shouldDisableFields} />
-        </Form.Item>
+          <SInput disabled={shouldDisableFields} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Rua"
           name="street"
           rules={[{ required: true, message: "Rua Inválida!" }]}
         >
-          <Input disabled={shouldDisableFields} />
-        </Form.Item>
+          <SInput disabled={shouldDisableFields} />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Numero"
           name="number"
           rules={[{ required: true, message: "Numero da casa Inválido!" }]}
         >
-          <Input />
-        </Form.Item>
+          <SInput />
+        </SformItem>
 
-        <Form.Item
+        <SformItem
           label="Senha"
           name="password"
           rules={[{ required: true, message: "Senha Inválida!" }]}
         >
-          <Input.Password maxLength={12} minLength={8} />
-        </Form.Item>
+          <SInput.Password
+            maxLength={12}
+            minLength={8}
+            style={styles.customInput}
+          />
+        </SformItem>
+        <ButtonAlign>
+          <Sbutton type="link" htmlType="button">
+            Login
+          </Sbutton>
 
-        <Button type="link" htmlType="button">
-          Login
-        </Button>
+          <Sbutton type="primary" htmlType="submit" onClick={handleSubmit}>
+            Registrar
+          </Sbutton>
 
-        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-          Registrar
-        </Button>
-
-        <Button htmlType="button" onClick={onReset}>
-          Cancelar
-        </Button>
+          <Sbutton type="link" onClick={onReset}>
+            Cancelar
+          </Sbutton>
+        </ButtonAlign>
       </Form>
-    </div>
+    </Container>
   );
 };

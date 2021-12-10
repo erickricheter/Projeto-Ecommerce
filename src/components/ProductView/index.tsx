@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Button, Modal } from "antd";
+import { Button, Modal, notification } from "antd";
 import React, { useContext, useState } from "react";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { CartContext } from "../../context/CartContext";
@@ -58,7 +58,10 @@ export const ProductView = ({ product, isCartView }: ProductViewProps) => {
             shape="round"
             icon={<GiTakeMyMoney />}
             size="large"
-            onClick={() => addItem(product)}
+            onClick={() => {
+              addItem(product);
+              notification.open({ message: "Produto adicionado Ao carrinho!" });
+            }}
           >
             Comprar!
           </Button>

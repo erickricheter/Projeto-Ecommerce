@@ -1,13 +1,20 @@
 import React from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, notification, Select } from "antd";
+import { Container, Sh1, Sp, Ssection } from "./styles";
+import { SInput } from "../../Registration/FormRegistration/styles";
+import { SformItem } from "../../../styles";
+
+const styles = {
+  customInput: { width: "100%", border: "2px solid black" },
+};
 
 export const ContactForm = () => (
   <div>
     <h1 className="alinhamento">Bem vindo! tire suas dúdidas com a gente!</h1>
 
-    <h1>Vamos ver nossas perguntas frequentes antes de tudo?</h1>
+    <Sh1>Vamos ver nossas perguntas frequentes antes de tudo?</Sh1>
 
-    <section className="pergunta">
+    <Ssection>
       <ul>
         <li>
           <h2>Como fazer a troca de alimento corretamente?</h2>
@@ -18,9 +25,9 @@ export const ContactForm = () => (
           </p>
         </li>
       </ul>
-    </section>
+    </Ssection>
 
-    <section className="pergunta">
+    <Ssection>
       <ul>
         <li>
           <h2>Como saber a porção ideal que devo oferecer ao pet?</h2>
@@ -31,9 +38,9 @@ export const ContactForm = () => (
           </p>
         </li>
       </ul>
-    </section>
+    </Ssection>
 
-    <section className="pergunta">
+    <Ssection>
       <ul>
         <li>
           <h2>Como eu faço para meu peixe se acostumar com o novo ambiente?</h2>
@@ -46,13 +53,13 @@ export const ContactForm = () => (
           </p>
         </li>
       </ul>
-    </section>
+    </Ssection>
 
-    <section className="pergunta">
+    <Ssection>
       <ul>
         <li>
           <h2>Vocês vendem animais?</h2>
-          <p>
+          <Sp>
             Nossa loja e contra a venda de animais, já que você está procurando
             um animalzinho porque não adota um? Tem tantos esperando um novo
             lar! Aqui esta alguns links para te ajudar nessa busca de um novo
@@ -60,60 +67,62 @@ export const ContactForm = () => (
             <a href="https://arcabrasil.org.br/index.php/sites-para-adotar-ou-doar-um-animal/">
               Aqui!
             </a>
-          </p>
+          </Sp>
         </li>
       </ul>
-    </section>
+    </Ssection>
 
     <h2 className="alinhamento">
       Você ainda tem alguma pergunta? Fala com a gente!
     </h2>
 
-    <Form>
-      <h3>Mande sua dúvida ou reclamação!</h3>
+    <Container>
+      <Form onFinish={() => notification.open({ message: "Enviado!" })}>
+        <h3>Mande sua dúvida ou reclamação!</h3>
 
-      <Form.Item
-        label="Nome Completo"
-        name="name"
-        rules={[{ required: true, message: "Digite seu Nome Completo!" }]}
-      >
-        <Input placeholder="Digite seu Nome." />
-      </Form.Item>
+        <SformItem
+          label="Nome Completo"
+          name="name"
+          rules={[{ required: true, message: "Digite seu Nome Completo!" }]}
+        >
+          <SInput placeholder="Digite seu Nome." />
+        </SformItem>
 
-      <Form.Item
-        label="E-mail"
-        name="email"
-        rules={[
-          { required: true, message: "Digite seu E-mail!", type: "email" },
-        ]}
-      >
-        <Input type="email" placeholder="Digite seu E-mail" />
-      </Form.Item>
+        <SformItem
+          label="E-mail"
+          name="email"
+          rules={[
+            { required: true, message: "Digite seu E-mail!", type: "email" },
+          ]}
+        >
+          <SInput type="email" placeholder="Digite seu E-mail" />
+        </SformItem>
 
-      <Form.Item
-        label="Assunto"
-        name="Subject"
-        rules={[{ required: true, message: "Selecione Seu assunto!" }]}
-      >
-        <Select placeholder="Selecione">
-          <Select.Option value="sugestion">Sugestões</Select.Option>
-          <Select.Option value="complaint">Reclamação</Select.Option>
-          <Select.Option value="compliment">Elogio</Select.Option>
-          <Select.Option value="other">Outros</Select.Option>
-        </Select>
-      </Form.Item>
+        <SformItem
+          label="Assunto"
+          name="Subject"
+          rules={[{ required: true, message: "Selecione Seu assunto!" }]}
+        >
+          <Select placeholder="Selecione" style={styles.customInput}>
+            <Select.Option value="sugestion">Sugestões</Select.Option>
+            <Select.Option value="complaint">Reclamação</Select.Option>
+            <Select.Option value="compliment">Elogio</Select.Option>
+            <Select.Option value="other">Outros</Select.Option>
+          </Select>
+        </SformItem>
 
-      <Form.Item
-        label="Seu Texto"
-        name="text"
-        rules={[{ required: true, message: "Escreva seu texto!" }]}
-      >
-        <Input.TextArea />
-      </Form.Item>
+        <SformItem
+          label="Seu Texto"
+          name="text"
+          rules={[{ required: true, message: "Escreva seu texto!" }]}
+        >
+          <Input.TextArea style={styles.customInput} />
+        </SformItem>
 
-      <Button type="primary" htmlType="submit">
-        Enviar
-      </Button>
-    </Form>
+        <Button type="primary" htmlType="submit">
+          Enviar
+        </Button>
+      </Form>
+    </Container>
   </div>
 );

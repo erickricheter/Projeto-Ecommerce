@@ -5,7 +5,15 @@ import { products as pList } from "../../pages/Home/FavoriteProducts/products";
 import { Container } from "./styles";
 import { ProductsListProps } from "./types";
 
-export const ProductsList = ({ title, type, products }: ProductsListProps) => {
+export const ProductsList = ({
+  title,
+  type,
+  products,
+  totalValue,
+  ticket,
+  setTicket,
+  isTicketValid,
+}: ProductsListProps) => {
   const [productList, setProductList] = useState(
     products ?? pList.filter((product) => product.type === type)
   );
@@ -35,6 +43,22 @@ export const ProductsList = ({ title, type, products }: ProductsListProps) => {
   return (
     <Container id={type}>
       <h2>{title}!</h2>
+      {totalValue && (
+        <>
+          <h2>Valor total da compra: {totalValue}</h2>
+          <input
+            value={ticket}
+            type="text"
+            onChange={(evt) => setTicket && setTicket(evt.target.value)}
+          />
+          {isTicketValid && (
+            <>
+              <span>O Cupom digitado é válido</span> O valor Com desconto é{" "}
+              {(Number(totalValue) - Number(totalValue) * 0.15).toFixed(2)}
+            </>
+          )}
+        </>
+      )}
       <Button onClick={handleOrderName}>Nome</Button>
       <Button onClick={handleOrderPrice}>Preço</Button>
       <div className="listaProdutos formatacaoProd">
@@ -46,6 +70,7 @@ export const ProductsList = ({ title, type, products }: ProductsListProps) => {
           />
         ))}
       </div>
+      <Button>Finalizar Compra</Button>
     </Container>
   );
 };
