@@ -18,3 +18,7 @@ Pet House is an e-commerce platform dedicated to pet lovers where they can buy p
 ## How to use
 
 To use it, simply clone the repository and then use the "npm start" command.
+
+## License 
+
+This project is licensed under the MIT License. Please refer to the LICENSE file for more information.
