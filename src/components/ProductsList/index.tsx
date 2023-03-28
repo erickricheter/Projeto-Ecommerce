@@ -59,6 +59,7 @@ export const ProductsList = ({
           )}
         </>
       )}
+      <h3>Ordenar por: </h3>
       <Button onClick={handleOrderName}>Nome</Button>
       <Button onClick={handleOrderPrice}>Preço</Button>
       <div className="listaProdutos formatacaoProd">
@@ -70,7 +71,6 @@ export const ProductsList = ({
           />
         ))}
       </div>
-      <Button>Finalizar Compra</Button>
     </Container>
   );
 };

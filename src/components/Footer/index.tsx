@@ -1,4 +1,4 @@
-import React from "react";
+import * as ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import { Container } from "./styles";
 

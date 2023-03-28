@@ -3,6 +3,13 @@
     "browser": true,
     "es2021": true
   },
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto",
+      "root": true
+    }
+  ],
   "extends": ["airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -14,16 +21,22 @@
   },
   "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
-      "jsx-a11y/label-has-associated-control": ["error", {
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
         "required": {
           "some": ["nesting", "id"]
         }
-      }],
-      "jsx-a11y/label-has-for": ["error", {
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
         "required": {
           "some": ["nesting", "id"]
         }
-      }],
+      }
+    ],
     "react-hooks/rules-of-hooks": "error",
     "prettier/prettier": "error",
     "no-use-before-define": "off",

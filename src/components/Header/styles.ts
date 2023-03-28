@@ -11,6 +11,7 @@ export const Container = styled.header`
     align-items: center;
     height: 250px;
     padding: 15px;
+    width: 100%;
   }
 
   #logo,
@@ -27,6 +28,7 @@ export const Container = styled.header`
     margin: 10px 0px;
     gap: 10px;
     display: flex;
+    font-size: 20px;
   }
 
   #menu img {
